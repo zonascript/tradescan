@@ -670,7 +670,7 @@ header {
 /*reset*/
 
 .email-body form .register-on-login{
-  width: 60px !important;
+  width: 100px !important;
   color: #6D7380;
   text-decoration: underline;
   text-align: center;

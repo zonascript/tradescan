@@ -47,9 +47,9 @@
         @if ($errors->has('password'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('password') }}
         @endif
-        @if (session('errors')->first('pwd_not_match'))
-            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('pwd_not_match') }}
-        @endif
+          @if ($errors->has('pwd_not_match'))
+            <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('pwd_not_match') }}
+          @endif
       </div>
 
       <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ env('RE_CAP_SITE') }}"></div>

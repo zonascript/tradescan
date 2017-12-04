@@ -18,7 +18,6 @@
 		  if (!(/agreement1/i.test(form[0].baseURI)) && !(/agreement2/i.test(form[0].baseURI))){
 			  e.preventDefault();
       }
-		  console.log((/agreement1/i.test(form[0].baseURI)) || (/agreement2/i.test(form[0].baseURI)));
 		  myInput.css({'border':'solid 1px #d0d0d033'});
 		  $(".error-message").html('');
 
@@ -28,7 +27,6 @@
 			  data: form.serialize(),
 			  dataType: "json",
 			  success: function(data) {
-				  console.log(data);
 			  	switch(true){
             case !$.isEmptyObject(data.validation_error):
 	            if (data.validation_error['g-recaptcha-response']){

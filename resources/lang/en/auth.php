@@ -19,6 +19,7 @@ return [
     'not_confirmed_resend' => 'The user already exists but the email address has not yet been confirmed. Please refer to the letter that was recently sent to your email address. Follow the link in the letter to confirm your email address. Check folder `spam`.',
     'invalid_post_service' => 'Unfortunately, the mail server does not work temporarily. Try to register in an hour. Do not forget to use the same password that you just entered, or register via new one.',
     'invalid_send_mail' => 'Unfortunately, the mail server does not work temporarily. Try to recover your password in an hour.',
+    'invalid_send_reset_mail' => 'Unfortunately, the mail server does not work temporarily. Try to recover your password in an hour.',
     'smth_went_wrong' => 'Something went wrong, please try again. Repeat process in an hour or try another Email address',
     'error_while_registration' => 'Something went wrong while registration, please try again. Repeat process in an hour or try another Email address',
 
