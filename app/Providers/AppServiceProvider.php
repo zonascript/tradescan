@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//      error_reporting(0);
+      error_reporting(0);
       Schema::defaultStringLength(191);
       Validator::extend('unique_wallet', function($attribute, $value, $parameters, $validator) {
           $query = UserWalletFields::select('*');

@@ -161,9 +161,9 @@ class RegisterController extends Controller
       }
     }
 
-    public function confirmation($token){
+    public function confirmation($token, $host) {
       $user = User::where('token', $token)->first();
-
+      Log::info($host);
       if (is_null($user)) {
         return redirect(route('login'))->with('success', 'No such user');
       }
