@@ -71,7 +71,6 @@ class ChangePasswordController extends Controller
       'email' => 'required|string|email|min:7|max:255',
       'password1' => 'required|string|min:3|max:1024',
       'password2' => 'required|string|min:3|max:1024',
-      'captcha' => 'accepted',
       'g-recaptcha-response' => 'required'
 
     ]);
@@ -113,31 +112,33 @@ class ChangePasswordController extends Controller
     }
     
     if ($validator->fails()) {
-      return redirect()->back()->withErrors($validator->errors());
+      return response()->json(['validation_error'=>$validator->errors()]);
+
     }
 
     if (!$passwordIsVerified) {
-      return redirect()->back()->withErrors(['pwd_not_match'=>Lang::get('controller/changeEmail.pwd_not_match')]);
+      return response()->json(['pwd_not_match'=>Lang::get('controller/changeEmail.pwd_not_match')]);
     }
 
     if ($input['email'] != $user->email && strlen($user->email) > 6) {
-      return redirect()->back()->withErrors(['not_yours'=>Lang::get('controller/changeEmail.not_yours')]);
+      return response()->json(['not_your_email'=>Lang::get('controller/changeEmail.not_yours')]);
     }
 
     if (trim(strtolower($input['password1'])) == trim(strtolower($input['password2']))) {
-      return redirect()->back()->withErrors(['not_equal'=>Lang::get('controller/changePassword.not_equal')]);
+      return response()->json(['not_equal'=>Lang::get('controller/changePassword.not_equal')]);
     }
 
     $data = [
       'password' => $input['password2'],
       'email' => $user->email
     ];
+
     $request->user()->fill([
       'password' => bcrypt($request['password2'])
     ])->save();
 
     $this->change_pwd_history_make($input['password1'], $input['password2']);
-    return redirect(route('home'))->with('status', Lang::get('controller/changePassword.success'));
+    return response()->json(['status', Lang::get('controller/changePassword.success')]);
   }
 }
 

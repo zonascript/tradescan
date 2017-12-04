@@ -73,7 +73,7 @@
       If you did not register with us - just ignore this letter.
     </p>
     <p>
-      <a href="#">support@zabercoin.co.za</a>
+      <a href="#">support@example.io</a>
     </p>
   </div>
 </div>

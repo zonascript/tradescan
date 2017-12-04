@@ -14,8 +14,8 @@ trait ChangeUserFieldTrait
 
     for ($i = 0; $i < 3; $i++) {
       $api_key = "6jbnone8wamhti3m7duz5wjypxki8mhua9853mdo";
-      $email_from_name = 'Zaber Support';
-      $email_from_email = 'investor@zabercoin.co.za';
+      $email_from_name = 'Example Support';
+      $email_from_email = 'investor@example.io';
       $email_to = ($data_old) ? $data_old['email'] : $data['email'];
       $email_body = ($key == 'email') ?
           (($data_old) ?
@@ -24,7 +24,7 @@ trait ChangeUserFieldTrait
           (($key == 'password') ?
               view('mails/change_password_confirmation') :
               view('mails/reset_password_confirmation', ['email' => $data['email'], 'token' => $data['remember_token']]));
-      $email_subject = ($key == 'email') ? 'New email at zabercoin.co.za' : (($key == 'password') ? 'New password at zabercoin.co.za' : 'Reset password at zabercoin.co.za');
+      $email_subject = ($key == 'email') ? 'New email at example.cryptob2b.io' : (($key == 'password') ? 'New password at zabercoin.co.za' : 'Reset password at example.cryptob2b.io');
       $list_id = 11422769;
       $request = [
         'api_key' => $api_key,

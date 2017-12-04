@@ -1,4 +1,4 @@
-<h2>Welcome to Zaber</h2>
+<h2>Welcome to Example</h2>
 <p>Your login is: {{ $data['email'] }}</p>
 <p>Your password is: {{ $data['password'] }}</p>
 

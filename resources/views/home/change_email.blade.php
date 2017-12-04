@@ -6,10 +6,10 @@
     <h3>@lang('home/change_email.change_email')</h3>
     <form id="changeEmailForm" method="POST" action="{{ route('reset_email') }}">
       {{ csrf_field() }}
-      <label for="email" class="email-label">@lang('home/change_email.current_email')</label>
+      <label for="email1" class="email-label">@lang('home/change_email.current_email')</label>
       <input type="text" name="email1" class="my-input email-input">
 
-      <div class="error-message error-message0">
+      <div class="error-message error-message0 email1 not_your_email not_equal">
         @if ($errors->has('email1'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('email1') }}
         @endif
@@ -26,7 +26,7 @@
       <label for="email2" class="email-label">@lang('home/change_email.new_email')</label>
       <input id="email2" type="text" class="my-input" name="email2">
 
-      <div class="error-message error-message1">
+      <div class="error-message error-message1 email2 not_equal is_taken">
         @if ($errors->has('email2'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('email2') }}
         @endif
@@ -43,18 +43,21 @@
       <label for="password" class="email-label">@lang('home/login.pwd_label')</label>
       <input id="password" type="password" class="my-input" name="password">
 
-      <div class="error-message error-message2">
+      <div class="error-message error-message2 password pwd_not_match">
         @if ($errors->has('password'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('password') }}
         @endif
-        @if (session('errors'))
-          @if (session('errors')->first('pwd_not_match'))
-              <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('pwd_not_match') }}
-          @endif
+        @if (session('errors')->first('pwd_not_match'))
+            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('pwd_not_match') }}
         @endif
       </div>
 
       <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ env('RE_CAP_SITE') }}"></div>
+      <div class="error-message error-message3 captcha-block g-recaptcha-response">
+        @if ($errors->has('captcha'))
+          <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('captcha') }}
+        @endif
+      </div>
       <div class="mycrypto-btn-container">
         <button type="submit"
                 class="login-btn reusable-btn">  @lang('home/change_password.change_btn') </button>

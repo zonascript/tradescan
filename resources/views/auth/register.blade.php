@@ -13,14 +13,14 @@
                   <p>{{ $success }}</p>
              </span>
             @endif
-            <div class="error-message error-message0">
+            <div class="error-message error-message0 email">
                 @if ($errors->has('email'))
                     <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('email') }}
                 @endif
             </div>
             <label for="password" class="password-label">@lang('home/register.create_password')</label>
             <input type="password" name="password" class="my-input password-input">
-            <div class="error-message error-message1">
+            <div class="error-message error-message1 password">
               @if ($errors->has('password'))
                 <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('password') }}
               @endif
@@ -35,52 +35,51 @@
                </div>
                <p>@lang('home/register.please_w8')</p>
              </div>
-            <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ env('RE_CAP_SITE') }}"></div>
+          <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ env('RE_CAP_SITE') }}"></div>
+          <div class="error-message error-message3 captcha-block g-recaptcha-response">
+            @if ($errors->has('captcha'))
+              <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('captcha') }}
+            @endif
+          </div>
             <button type="submit" class="register-btn login-btn reusable-btn">  @lang('home/register.register_btn')  </button>
                <a class="register-on-login" href="{{ route('login') }}"> @lang('home/login.login_btn') </a>
+
+          <input type="hidden" name="hidden" class="my-input password-input">
+          <div class="error-message
+                  error-message4
+                  not_confirmed_resend
+                  smth_went_wrong
+                  invalid_send_mail
+                  reset_limit_exceeded
+                  invalid_post_service
+                  error_while_registration
+                  user_not_found
+                  invalid_send_reset_mail
+                  reg_limit_exceeded
+                  error_occured">
+            @if ($errors->has('not_confirmed_resend')
+             or $errors->has('smth_went_wrong')
+              or $errors->has('invalid_send_mail')
+               or $errors->has('error_occured')
+                or $errors->has('invalid_post_service')
+                 or $errors->has('error_while_registration')
+                  or $errors->has('user_not_found')
+                    or $errors->has('invalid_send_reset_mail')
+                    or $errors->has('reg_limit_exceeded') )
+              <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp
+            @endif
+          </div>
         </form>
 
-    @if (session('errors'))
-      @if (session('errors')->first('not_confirmed_resend'))
-        <span class="help-block" style="width: 265px">
-          <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('not_confirmed_resend') }}
-        </span>
-      @endif
-        @if (session('errors')->first('invalid_post_service'))
-          <span class="help-block" style="width: 265px">
-            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('invalid_post_service') }}
-          </span>
-        @endif
-        @if (session('errors')->first('smth_went_wrong'))
-          <span class="help-block">
-            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('smth_went_wrong') }}
-          </span>
-        @endif
-        @if (session('errors')->first('error_occured'))
-          <span class="help-block" style="width: 265px">
-            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('error_occured') }}
-          </span>
-        @endif
-        @if (session('errors')->first('error_while_registration'))
-          <span class="help-block" style="width: 265px">
-            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('error_while_registration') }}
-          </span>
-        @endif
-    @endif
-        @if ($errors->has('captcha'))
-          <span class="help-block captcha-block">
-              <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('captcha') }}
-          </span>
-        @endif
     </div>
     <br><br><br><br><br>
 @endsection
 @section('script')
   <script>
-    $('#registerForm').on('submit', function(){
-	    	$('.help-block-please-wait').show();
-	    $(this).find("button[type='submit']").prop('disabled',true);
-    });
+//    $('#registerForm').on('submit', function(){
+//	    	$('.help-block-please-wait').show();
+//	    $(this).find("button[type='submit']").prop('disabled',true);
+//    });
 
   </script>
 @endsection

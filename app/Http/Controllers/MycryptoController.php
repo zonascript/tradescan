@@ -94,13 +94,13 @@ class MycryptoController extends Controller
       'wallet_get_tokens' => 'required|string|min:25|max:45|unique_wallet',
     ]);
     if ($validator->fails()) {
-      return response()->json(['error'=>$validator->errors()]);
+      return response()->json(['validation_error'=>$validator->errors()]);
     }
-
+    $request[$request['name_of_wallet_invest_from']] = $request['wallet_invest_from'];
     $wallet = $this->create($request->all())->toArray();
     $this->wallet_history_make('store wallet', $wallet, null);
 
-    return  response()->json(['status', Lang::get('controller/mycrypto.message_0')]);
+    return response()->json(['status', Lang::get('controller/mycrypto.message_0')]);
   }
 
   public function update_wallet_data(Request $request)
@@ -113,7 +113,7 @@ class MycryptoController extends Controller
       'g-recaptcha-response'  => 'required'
     ]);
     if ($validator->fails()) {
-      return response()->json(['error'=>$validator->errors()]);
+      return response()->json(['validation_error'=>$validator->errors()]);
     }
 
     $walletData = UserWalletFields::where('user_id', Auth::id())->first();
@@ -121,7 +121,7 @@ class MycryptoController extends Controller
     $passwordIsVerified = password_verify( $request['password'], $user->password );
     if (!$passwordIsVerified) {
       $validator->getMessageBag()->add('password', Lang::get('controller/mycrypto.message_2'));
-      return response()->json(['error' => $validator->errors()]);
+      return response()->json(['validation_error' => $validator->errors()]);
     }
 
     $walletData->wallet_invest_from = $request['wallet_invest_from'];

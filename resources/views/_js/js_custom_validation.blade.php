@@ -1,62 +1,101 @@
-  {{--<script>--}}
-	  {{--var form = $('form');--}}
+  <script>
 
-	  {{--form.on('submit',function(e){--}}
-		  {{--e.preventDefault();--}}
-{{--//		  var _token = $("input[name='_token']").val();--}}
-{{--//		  var wallet_invest_from = $("input[name='wallet_invest_from']").val();--}}
-{{--//		  var name = localStorage.getItem('current-currency');--}}
-{{--//		  var wallet_get_tokens = $("input[name='wallet_get_tokens']").val();--}}
-{{--//		  var pwd = $("input[name='password']").val();--}}
-{{--//		  var c_response = grecaptcha.getResponse();--}}
-{{--//--}}
-{{--//		  var data = {--}}
-{{--//			  _token:_token,--}}
-{{--//			  wallet_invest_from:wallet_invest_from,--}}
-{{--//			  name_of_wallet_invest_from:name,--}}
-{{--//			  wallet_get_tokens:wallet_get_tokens,--}}
-{{--//			  password:pwd,--}}
-{{--//			  'g-recaptcha-response':c_response--}}
-{{--//		  };--}}
-{{--//--}}
-{{--//		  data[localStorage.getItem('current-currency')] = wallet_invest_from;--}}
-{{--//--}}
-{{--//		  if(localStorage.getItem('current-currency') === 'ETH'){--}}
-{{--//			  data.wallet_get_tokens = wallet_invest_from;--}}
-{{--//		  }--}}
+	  var form = $('form');
+	  var myInput = $('.my-input');
+	  myInput.on('input', function () {
+		  var index = myInput.index($(this));
+		  if($(this).is(':valid')){
+			  $('.error-message'+index).text('');
+			  $('.captcha-block').text('');
+			  $(this).css({'border':'solid 1px #d0d0d033'});
+		  }
+		  if($(this).value == ''){
+			  $(this).css({'border':'solid 1px #d0d0d033'});
+		  }
+	  });
 
-		  {{--$.ajax({--}}
-			  {{--url: form.attr("action"),--}}
-			  {{--type: form.attr("method"),--}}
-			  {{--data: form.serialize(),--}}
-			  {{--dataType: "json",--}}
-			  {{--success: function(data) {--}}
-				  {{--if(!$.isEmptyObject(data.error)){--}}
-					  {{--if (data.error['g-recaptcha-response']){--}}
-						  {{--data.error['g-recaptcha-response'] = ['{{ __('validation.accepted') }}'];--}}
-					  {{--}--}}
-					  {{--$.each( data.error, function( key, value ) {--}}
-						  {{--console.log(key, value);--}}
-						  {{--if($(".error-message."+key).prev().hasClass('my-input')){--}}
-							  {{--$(".error-message."+key).prev().css({'border':'1px solid #ff443a'});--}}
-						  {{--}--}}
-						  {{--$(".error-message."+key).html('<i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp'+value[0]);--}}
-					  {{--});--}}
-				  {{--} else {--}}
+	  form.on('submit',function(e){
+		  if (!(/agreement1/i.test(form[0].baseURI)) && !(/agreement2/i.test(form[0].baseURI))){
+			  e.preventDefault();
+      }
+		  console.log((/agreement1/i.test(form[0].baseURI)) || (/agreement2/i.test(form[0].baseURI)));
+		  myInput.css({'border':'solid 1px #d0d0d033'});
+		  $(".error-message").html('');
 
-					  {{--console.log('else');--}}
-					  {{--localStorage.setItem('wallet_msg','{{ __('controller/mycrypto.message_1') }}');--}}
-					  {{--var redirect_url = '{{ route('root') }}' + '/home';--}}
-					  {{--window.location.replace(redirect_url);--}}
-				  {{--}--}}
+		  $.ajax({
+			  url: form.attr("action"),
+			  type: form.attr("method"),
+			  data: form.serialize(),
+			  dataType: "json",
+			  success: function(data) {
+				  console.log(data);
+			  	switch(true){
+            case !$.isEmptyObject(data.validation_error):
+	            if (data.validation_error['g-recaptcha-response']){
+		            data.validation_error['g-recaptcha-response'] = ['{{ __('validation.accepted') }}'];
+	            }
+	            $.each( data.validation_error, function( key, value ) {
+		            if($(".error-message."+key).prev().hasClass('my-input')){
+			            $(".error-message."+key).prev().css({'border':'1px solid #ff443a'});
+		            }
+		            $(".error-message."+key).html('<i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp'+value[0]);
+	            });
+            	break;
+					  case !$.isEmptyObject(data.not_your_email):
+					  case !$.isEmptyObject(data.not_equal):
+					  case !$.isEmptyObject(data.pwd_not_match):
+					  case !$.isEmptyObject(data.is_taken):
+					  case !$.isEmptyObject(data.failed):
+					  case !$.isEmptyObject(data.reg_limit_exceeded):
+					  case !$.isEmptyObject(data.reset_limit_exceeded):
+					  case !$.isEmptyObject(data.not_confirmed_resend):
+					  case !$.isEmptyObject(data.invalid_post_service):
+					  case !$.isEmptyObject(data.smth_went_wrong):
+					  case !$.isEmptyObject(data.user_not_found):
+					  case !$.isEmptyObject(data.invalid_send_mail):
+					  case !$.isEmptyObject(data.invalid_send_reset_mail):
+					  case !$.isEmptyObject(data.reset_email_not_match):
+						  $.each( data, function( key, value ) {
+                $(".error-message."+key).prev().css({'border':'1px solid #ff443a'});
+							  $(".error-message."+key).html('<i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp'+value);
+						  });
+						  break;
+					  case !$.isEmptyObject(data.reset_pwd):
+					  	localStorage.setItem('reset_pwd', data.reset_pwd );
+						  $('.help-block-please-wait').show();
+						  $("button[type='submit']").prop('disabled', true);
+						  var redirect_url = '{{ route('root') }}' + '/';
+						  window.location.replace(redirect_url);resend
+						  break;
+					  case !$.isEmptyObject(data.resend):
+						  localStorage.setItem('resend', data.resend );
+						  $('.help-block-please-wait').show();
+						  $("button[type='submit']").prop('disabled', true);
+						  var redirect_url = '{{ route('root') }}' + '/';
+						  window.location.replace(redirect_url);
+						  break;
+					  case !$.isEmptyObject(data.success_register):
+						  $('.help-block-please-wait').show();
+						  $("button[type='submit']").prop('disabled', true);
+						  var redirect_url = '{{ route('root') }}' + '/successRegister';
+						  window.location.replace(redirect_url);
+						  break;
 
-			  {{--},--}}
-        {{--error: function(data){--}}
+            default:
+	            $('.help-block-please-wait').show();
+	            $("button[type='submit']").prop('disabled', true);
+	            localStorage.setItem('wallet_msg','{{ __('controller/mycrypto.message_1') }}');
+	            var redirect_url = '{{ route('root') }}' + '/home';
+	            window.location.replace(redirect_url);
+            	break;
+          }
 
-	        {{--console.log(data.errors);--}}
-        {{--}--}}
-		  {{--});--}}
+			  },
+        error: function(data){
+	        console.log(data.errors);
+        }
+		  });
 
-	  {{--});--}}
+	  });
 
-  {{--</script>--}}
+  </script>

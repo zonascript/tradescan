@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Session;
 use ReCaptcha\ReCaptcha;
 use App\Traits\CaptchaTrait;
 use App\User;
+use Illuminate\Support\Facades\Validator;
+
 
 trait SendsPasswordResetEmails
 {
@@ -38,53 +40,45 @@ trait SendsPasswordResetEmails
    */
   public function sendResetLinkEmail(Request $request)
   {
-    $this->validateEmail($request);
+    $validator = Validator::make($request->all(),
+      [
+        'email' => 'required|email|min:7|max:255',
+        'g-recaptcha-response' => 'required'
+      ]);
+
+    if ($validator->fails()) {
+      return response()->json(['validation_error'=>$validator->errors()]);
+    }
 
     $user = User::where('email', $request['email'])->first();
     if (!$user) {
-      return redirect()->back()->withErrors(['user_not_found' => trans('auth.not_found')]);
+      return response()->json(['user_not_found' => trans('auth.not_found')]);
     }
     if ($user->confirmed == 0) {
 
       $reg = new RegisterController();
       if ($user->reg_attempts == 5) {
-        return redirect('/')->withErrors(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
+        return response()->json(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
       }
       $reg->thisConfirmationEmailSend($user, 3);
       $user->reg_attempts++;
       $user->save();
 
-      return redirect()->back()->withErrors(['not_confirmed_resend' => trans('auth.not_confirmed_resend')]);
+      return response()->json(['not_confirmed_resend' => trans('auth.not_confirmed_resend')]);
     }
 
     $request->session()->put('reset_password_email', $request['email']);
     if($user->reset_attempts == 5) {
-      return redirect('/')->withErrors(['reset_limit_exceeded' => trans('home/register.reset_limit_exceeded')]);
+      return response()->json(['reset_limit_exceeded' => trans('home/register.reset_limit_exceeded')]);
     }
       $response = $this->sendNewEmail($user, 3, 'reset_pwd', null);
       if (!$response or empty($response->result)) {
-        return redirect()->back()->withErrors(['invalid_send_reset_mail' => Lang::get('auth.invalid_send_reset_mail')]);
+        return response()->json(['invalid_send_reset_mail' => trans('auth.invalid_send_reset_mail')]);
       }
       $user->reset_attempts++;
       $user->save();
 
-    return redirect('/')->with('reset_pwd', Lang::get('home/mails.reset_pwd_msg'));;
-  }
-
-  /**
-   * Validate the email for the given request.
-   *
-   * @param \Illuminate\Http\Request $request
-   * @return void
-   */
-  protected function validateEmail(Request $request)
-  {
-    $request['captcha'] = $this->captchaCheck();
-    $this->validate($request, [
-      'email' => 'required|email|min:7|max:255',
-      'g-recaptcha-response' => 'required',
-      'captcha' => 'accepted'
-    ]);
+    return response()->json(['reset_pwd' => trans('home/mails.reset_pwd_msg')]);
   }
 
   /**

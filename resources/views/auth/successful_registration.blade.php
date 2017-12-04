@@ -10,38 +10,32 @@
           <span id="timer">59</span>
         </button>
       </form>
-      @if (Session::has('resend'))
-        <span class="help-block" style="color:#1fcc1f; width: 265px">
-          <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{Session::get('resend') }}
-        </span>
-      @endif
+      <span class="help-block-reset-pwd" style="color:lightseagreen; width: 265px"></span>
     </div>
   </div>
-  @if (session('errors'))
-    @if (session('errors')->first('not_confirmed_resend'))
-      <span class="help-block" style="width: 265px">
-          <i class="fa fa-exclamation-circle fa-lg"
-             aria-hidden="true"></i>&nbsp{{ session('errors')->first('not_confirmed_resend') }}
-        </span>
+  <input type="hidden" name="hidden" class="my-input password-input">
+  <div class="error-message
+                  error-message4
+                  not_confirmed_resend
+                  smth_went_wrong
+                  invalid_send_mail
+                  reset_limit_exceeded
+                  invalid_post_service
+                  error_while_registration
+                  user_not_found
+                  invalid_send_reset_mail
+                  reg_limit_exceeded
+                  error_occured">
+    @if ($errors->has('not_confirmed_resend')
+     or $errors->has('smth_went_wrong')
+      or $errors->has('invalid_send_mail')
+       or $errors->has('error_occured')
+        or $errors->has('invalid_post_service')
+         or $errors->has('error_while_registration')
+          or $errors->has('user_not_found')
+            or $errors->has('invalid_send_reset_mail')
+            or $errors->has('reg_limit_exceeded') )
+      <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp
     @endif
-    @if (session('errors')->first('invalid_post_service'))
-      <span class="help-block" style="width: 265px">
-            <i class="fa fa-exclamation-circle fa-lg"
-               aria-hidden="true"></i>&nbsp{{ session('errors')->first('invalid_post_service') }}
-          </span>
-    @endif
-    @if (session('errors')->first('smth_went_wrong'))
-      <span class="help-block">
-            <i class="fa fa-exclamation-circle fa-lg"
-               aria-hidden="true"></i>&nbsp{{ session('errors')->first('smth_went_wrong') }}
-          </span>
-    @endif
-    @if (session('errors')->first('error_occured'))
-      <span class="help-block" style="width: 265px">
-            <i class="fa fa-exclamation-circle fa-lg"
-               aria-hidden="true"></i>&nbsp{{ session('errors')->first('error_occured') }}
-          </span>
-
-    @endif
-  @endif
+  </div>
 @endsection

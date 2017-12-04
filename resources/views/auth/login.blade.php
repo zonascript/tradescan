@@ -27,51 +27,35 @@
       <label for="password" class="password-label ">@lang('home/login.pwd_label')</label>
       <input type="password" name="password" autofocus class="my-input password-input">
 
-      <div class="error-message error-message1 password">
+      <div class="error-message error-message1 password pwd_not_match">
         @if ($errors->has('password'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('password') }}
         @endif
       </div>
       <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ env('RE_CAP_SITE') }}"></div>
-
-      {{--<div class="error-message error-message3 captcha-block g-recaptcha-response">--}}
-        {{--@if ($errors->has('captcha'))--}}
-          {{--<i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('captcha') }}--}}
-        {{--@endif--}}
-      {{--</div>--}}
+      <div class="error-message error-message3 captcha-block g-recaptcha-response">
+        @if ($errors->has('captcha'))
+          <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('captcha') }}
+        @endif
+      </div>
       <button type="submit" class="login-btn reusable-btn">   @lang('home/login.login_btn')  </button>
       <div class="log-forgot">
         <a class="sign-forgot" href="{{ route('register') }}"> @lang('app.sign_up') </a>
         <a class="sign-forgot" href="{{ route('password.request') }}"> @lang('home/login.forgot_pwd')</a>
       </div>
+
+      <input type="hidden" name="hidden" class="my-input password-input">
+      <div class="error-message error-message4 failed reg_limit_exceeded error_while_registration smth_went_wrong invalid_post_service not_confirmed_resend">
+        @if ($errors->has('failed') or $errors->has('reg_limit_exceeded') or $errors->has('error_while_registration') or $errors->has('smth_went_wrong') or $errors->has('invalid_post_service') or $errors->has('not_confirmed_resend'))
+        <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp
+        @endif
+      </div>
     </form>
 
 
 
-      @if (session('errors'))
-        @if (session('errors')->first('failed'))
-          <span class="help-block" style="width: 265px">
-          <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('failed') }}
-        </span>
-        @endif
-        @if (session('errors')->first('not_confirmed_resend'))
-          <span class="help-block" style="width: 265px">
-        <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('not_confirmed_resend') }}
-      </span>
-        @endif
-        @if (session('errors')->first('error_while_registration'))
-          <span class="help-block" style="width: 265px">
-            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp{{ session('errors')->first('error_while_registration') }}
-          </span>
-        @endif
-      @endif
 
 
-      @if ($errors->has('captcha'))
-        <span class="help-block captcha-block">
-              <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('captcha') }}
-          </span>
-      @endif
   </div>
 <br><br><br><br><br>
 @endsection

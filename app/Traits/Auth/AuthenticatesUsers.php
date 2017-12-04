@@ -39,64 +39,46 @@ trait AuthenticatesUsers
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+
+        $validator = Validator::make($request->all(),
+        [
+          $this->username() => 'required|string|email|min:7',
+          'password' => 'required|string|min:3|max:1024',
+          'g-recaptcha-response'  => 'required'
+        ]);
+
+        if ($validator->fails()) {
+          return response()->json(['validation_error'=>$validator->errors()]);
+        }
 
         $current_user = User::where('email',$request['email']) -> first();
-        if ($current_user){
-          $passwordIsVerified = password_verify( $request['password'], $current_user->password );
-          $request['token'] = $current_user->token;
+
+        if (!$current_user){
+          return response()->json(['failed'=>trans('auth.failed')]);
         } else {
-          return $this->sendFailedLoginResponse($request);
+          $passwordIsVerified = password_verify( $request['password'], $current_user->password );
+        }
+
+        if (!$passwordIsVerified){
+          return response()->json(['pwd_not_match'=>trans('controller/changeEmail.pwd_not_match')]);
         }
 
         if( $current_user && $passwordIsVerified && $current_user->confirmed == 0 ){
           $reg = new RegisterController();
           if( $current_user->reg_attempts == 5){
-            return redirect('/')->withErrors(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
+            return response()->json(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
           }
           $reg->thisConfirmationEmailSend($current_user, 3);
           $current_user->reg_attempts++;
           $current_user->save();
-          return redirect()->back()->withErrors(['not_confirmed_resend' => trans('auth.not_confirmed_resend')]);
+          return response()->json(['not_confirmed_resend' => trans('auth.not_confirmed_resend')]);
         }
 
-
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
-        if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-            return $this->sendLockoutResponse($request);
-        }
-
-        if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
-        }
-
-        // If the login attempt was unsuccessful we will increment the number of attempts
-        // to login and redirect the user back to the login form. Of course, when this
-        // user surpasses their maximum number of attempts they will get locked out.
-        $this->incrementLoginAttempts($request);
-        return $this->sendFailedLoginResponse($request);
+        $request['token'] = $current_user->token;
+        $this->guard()->login($current_user);
+        return response()->json(['status', trans('controller/changePassword.success')]);
     }
 
-    /**
-     * Validate the user login request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     */
-    protected function validateLogin(Request $request)
-    {
-
-      $request['captcha'] = $this->captchaCheck();
-          $this->validate($request, [
-            $this->username() => 'required|string|email|min:7',
-            'password' => 'required|string|min:3|max:1024',
-            'g-recaptcha-response'  => 'required',
-            'captcha'               => 'accepted'
-          ]);
-    }
 
     /**
      * Attempt to log the user into the application.
@@ -158,12 +140,6 @@ trait AuthenticatesUsers
      *
      * @throws ValidationException
      */
-    protected function sendFailedLoginResponse(Request $request)
-    {
-
-           return redirect()->back()->withErrors(['failed'=>trans('auth.failed')]);
-
-    }
 
     /**
      * Get the login username to be used by the controller.

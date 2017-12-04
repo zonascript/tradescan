@@ -9,7 +9,7 @@
       <label for="email" class="email-label">@lang('home/change_email.current_email')</label>
       <input type="email" name="email" class="my-input email-input">
 
-      <div class="error-message error-message0">
+      <div class="error-message error-message0 email not_your_email">
         @if ($errors->has('email'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('email') }}
         @endif
@@ -23,7 +23,7 @@
       <label for="password1" class="email-label">@lang('home/change_password.cur_pwd')</label>
       <input id="password1" type="password" class="my-input" name="password1">
 
-      <div class="error-message error-message1">
+      <div class="error-message error-message1 password1 pwd_not_match not_equal">
         @if ($errors->has('password1'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('password1') }}
         @endif
@@ -40,7 +40,7 @@
       <label for="password2" class="email-label">@lang('home/change_password.new_pwd')</label>
       <input id="password2" type="password" class="my-input" name="password2">
 
-      <div class="error-message error-message2">
+      <div class="error-message error-message2 password2 not_equal">
         @if ($errors->has('password2'))
           <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('password2') }}
         @endif
@@ -52,6 +52,11 @@
       </div>
 
       <div class="g-recaptcha" data-theme="dark" data-sitekey="{{ env('RE_CAP_SITE') }}"></div>
+      <div class="error-message error-message3 captcha-block g-recaptcha-response">
+        @if ($errors->has('captcha'))
+          <i class='fa fa-exclamation-circle fa-lg' aria-hidden='true'></i>&nbsp{{ $errors->first('captcha') }}
+        @endif
+      </div>
       <div class="mycrypto-btn-container">
         <button type="submit"
                 class="login-btn reusable-btn">  @lang('home/change_password.change_btn') </button>

@@ -5,18 +5,35 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     $('body').css('height', $(document).height());
 });
 
-if (localStorage.getItem('wallet_msg')) {
-    var status_msg = $('.home-status-message');
-    status_msg.css('display', 'block');
-    status_msg.text(localStorage.getItem('wallet_msg'));
+switch (true){
+	case localStorage.getItem('wallet_msg') !== null:
+		showMessage(3000, 'wallet_msg', $('.home-status-message') );
+		$('.home-status-message').delay(3000).hide('slow', function () {
+			$('.home-status-message').remove();
+		});
+		break;
+	case localStorage.getItem('reset_pwd') !== null:
+		showMessage(6000, 'reset_pwd', $('.help-block-reset-pwd') );
+		$('.help-block-reset-pwd').delay(6000).hide('slow', function () {
+			$('.help-block-reset-pwd').remove();
+		});
+		break;
+	case localStorage.getItem('resend') !== null:
+		showMessage(6000, 'resend', $('.help-block-reset-pwd') );
+		$('.help-block-reset-pwd').delay(6000).hide('slow', function () {
+			$('.help-block-reset-pwd').remove();
+		});
+		break;
 }
 
-//'password has been successfully changed' - message
-$('.home-status-message').delay(3000).hide('slow', function () {
-    $('.home-status-message').remove();
-    localStorage.removeItem('wallet_msg');
+function showMessage(time, storageItem, domEl){
+		domEl.css('display', 'block');
+		domEl.html('<i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i> '+ localStorage.getItem(storageItem));
+	setTimeout(function() {
+		localStorage.removeItem(storageItem);
+	}, time);
 
-});
+}
 
 var second = 58;
 

@@ -13,7 +13,7 @@ return [
     'main' => 'main',
     'forum' => 'forum',
     'telegram_chat' => 'telegram chat (please, read the attached message at the top)',
-    'freed_profile' => 'profile CEO ZaberCoin',
+    'freed_profile' => 'profile CEO Example.io',
     'information_about_creating' => 'Information about creating a crypto-wallet and transferring money',
     'enter_wallet_to_participate' => 'Please add your wallet to participate in the program',
 

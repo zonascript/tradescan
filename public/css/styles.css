@@ -81,7 +81,9 @@ footer img {
   height: 28px;
 }
 
-
+.help-block-reset-pwd{
+  display:none;
+}
 /*nav-bar*/
 
 header {
@@ -506,7 +508,13 @@ header {
   left: 0;
   text-align: left;
 }
-
+.content-body form .user_not_found{
+  width: auto;
+}
+.content-body form .captcha-block {
+  text-align: center;
+  height: 25px;
+}
 .content-body .help-block {
   color: #ff443a;
   margin-top: 25px;
@@ -619,7 +627,6 @@ header {
 .login-body .help-login-block {
   width:265px;
 }
-
 /*common content template styles*/
 
 /*register*/

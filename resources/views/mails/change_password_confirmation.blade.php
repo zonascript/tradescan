@@ -67,6 +67,6 @@
 <div class="bottom">
   <p>{!! __('home/mails.do_not_reply') !!}<br>
     {!! __('home/mails.with_us') !!}</p>
-  <p><a href="#">support@zabercoin.co.za</a></p>
+  <p><a href="#">support@example.io</a></p>
 </div>
 </div>

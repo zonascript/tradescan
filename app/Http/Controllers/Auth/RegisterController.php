@@ -66,12 +66,9 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
-        $data['captcha'] = $this->captchaCheck();
         return Validator::make($data, [
             'email' => 'required|string|email|min:7|max:255|unique:users',
             'password' => 'required|alpha_num|min:3||max:255',
-            'captcha'               => 'accepted',
             'g-recaptcha-response'  => 'required'
         ]);
     }
@@ -112,16 +109,16 @@ class RegisterController extends Controller
     }
     public function resend()
     {
-      $email =Session::get('this_email');
+      $email = Session::get('this_email');
       $user = User::where('email', $email)->first();
 
       if($user->reg_attempts == 5){
-        return redirect('/')->withErrors(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
+        return response()->json(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
       }
       $this->thisConfirmationEmailSend($user,3);
       $user->reg_attempts++;
       $user->save();
-      return redirect()->back()->with('resend', Lang::get('controller/register.pwd_resent'));
+      return response()->json(['resend' => Lang::get('controller/register.pwd_resent')]);
     }
 
     public function thisConfirmationEmailSend($data, $timeout)
@@ -141,7 +138,7 @@ class RegisterController extends Controller
 
           if ($i == 3) {
             $data->forceDelete();
-            return redirect()->back()->withErrors(['invalid_post_service' => Lang::get('auth.invalid_post_service')]);
+            return response()->json(['invalid_post_service' => Lang::get('auth.invalid_post_service')]);
             break;
           } else {
             $regObj = $this->sendConfirmationEmail($data, $timeout);
@@ -154,13 +151,13 @@ class RegisterController extends Controller
       if(null === $regObj['jsonObj']) {
         Log::info('An error occured: jsonObj = null');
         $data->forceDelete();
-        return redirect()->back()->withErrors(['smth_went_wrong' => Lang::get('auth.smth_went_wrong')]);
+        return response()->json(['smth_went_wrong' => Lang::get('auth.smth_went_wrong')]);
       }
 
       if(!empty($regObj['jsonObj']->error)) {
         Log::info('An error occured:' . $regObj['jsonObj']->error . ', code: ' . $regObj['code']);
         $data->forceDelete();
-        return redirect()->back()->withErrors(['smth_went_wrong' => Lang::get('auth.smth_went_wrong')]);
+        return response()->json(['smth_went_wrong' => Lang::get('auth.smth_went_wrong')]);
       }
     }
 
@@ -192,19 +189,19 @@ class RegisterController extends Controller
         $passwordIsVerified = password_verify($request['password'], $user->password);
         if ($user && $passwordIsVerified && $user->confirmed == 0) {
           if($user->reg_attempts == 5){
-            return redirect('/')->withErrors(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
+            return response()->json(['reg_limit_exceeded' => trans('home/register.reg_limit_exceeded')]);
           }
           $this->thisConfirmationEmailSend($user,3);
           $user->reg_attempts++;
           $user->save();
-          return redirect()->back()->withErrors(['not_confirmed_resend' => Lang::get('auth.not_confirmed_resend')]);
+          return response()->json(['not_confirmed_resend' => Lang::get('auth.not_confirmed_resend')]);
         }
         if ($validator->fails()) {
-          return redirect()->back()->withInput()->withErrors($validator->errors());
+          return response()->json(['validation_error'=>$validator->errors()]);
         }
       }else{
         if ($validator->fails()) {
-          return redirect()->back()->withInput()->withErrors($validator->errors());
+          return response()->json(['validation_error'=>$validator->errors()]);
         }
         $data = $this->create($input)->toArray();
         $user = User::find($data['id']);
@@ -221,8 +218,7 @@ class RegisterController extends Controller
       $user->save();
 
       $this->registration_history_make($user);
-
-     return redirect(route('successRegister'))->with('success', Lang::get('controller/register.pwd_sent'));
+      return response()->json(['success_register' => Lang::get('controller/register.pwd_sent')]);
     }
 
 
