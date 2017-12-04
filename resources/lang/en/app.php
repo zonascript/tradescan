@@ -12,7 +12,7 @@ return array(
   'my_prof_crowd' => 'My profile & crowdsale',
   'sign_in' => 'Sign in ',
   'sign_up' => 'Sign up',
-  'white_book' => 'White book',
+  'white_book' => 'White paper',
 
 
   'january' => 'January',
