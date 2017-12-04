@@ -1,0 +1,38 @@
+@media only screen and (min-width:768px){
+  /* styles for browsers larger than 960px; */
+  .free-brand, .mobile-additional, .close-collapse {
+    display:none!important;
+  }
+  .navbar-default{
+    border: none!important;
+    box-shadow: none!important;
+  }
+  .logo-box-out-mobile{
+    display: none;
+  }
+  #myNavbar {
+    min-height: 48px!important;
+    width: 100%;
+    display: flex!important;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+  }
+  #myNavbar .logo-box{
+   margin-left: 5%;
+  }
+  #myNavbar .right-menu-box{
+    display: flex;
+    align-items: center;
+  }
+  #myNavbar div:nth-child(2){
+    /*margin-left: 25vw;*/
+
+  }
+  .cabinet-li{
+    flex-basis: 100%;
+  }
+  .navbar .navbar-nav {
+
+  }
+}
