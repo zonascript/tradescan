@@ -20,40 +20,26 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
-    {
+  public function handle($request, Closure $next, $guard = null)
+  {
 
-      if (Auth::guard($guard)->check()) {
-          return redirect('/home');
-      }
-      $c = Input::get('c');
-      $token = Input::get('code');
-      $email = Input::get('email');
-      $host = Input::get('host');
-      $user = User::where('email', $email) -> first();
-
-      if ($request->has(['c', 'email', 'code'])) {
-
-        if($user){
-          if($token != $user->token || $c != 'reg'){
-            return redirect('/');
-          } else {
-            return redirect(route('confirmation', $token));
-          }
-        }
-      } else if ($request->has(['c', 'email', 'code', 'host'])){
-
-        if($user){
-          if($token != $user->token || $c != 'reg'){
-            return redirect('/');
-          } else {
-            return redirect(route('confirmation', $token));
-          }
-        }
-        return redirect(route('confirmation', $token, $host));
-      }
-
-
-        return $next($request);
+    if (Auth::guard($guard)->check()) {
+      return redirect('/home');
     }
+    $c = Input::get('c');
+    $token = Input::get('code');
+    $email = Input::get('email');
+    $host = Input::get('host');
+    $user = User::where('email', $email) -> first();
+    if ($request->has(['c', 'email', 'code', 'host'])) {
+      if($user){
+        if($token != $user->token || $c != 'reg'){
+          return redirect('/');
+        } else {
+          return redirect(route('confirmation', ['token' => $token, 'host' => $host]));
+        }
+      }
+    }
+    return $next($request);
+  }
 }

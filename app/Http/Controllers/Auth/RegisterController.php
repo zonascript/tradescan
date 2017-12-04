@@ -161,7 +161,7 @@ class RegisterController extends Controller
       }
     }
 
-    public function confirmation($token, $host) {
+    public function confirmation($token, $host){
       $user = User::where('token', $token)->first();
       Log::info($host);
       if (is_null($user)) {
@@ -171,12 +171,11 @@ class RegisterController extends Controller
       $user->confirmed = 1;
       $user->confirmed_at = Carbon::now();
       $user->save();
-      $data = [
-        'message' => 'Email is correct. Just enter your password to login',
-        'title' => 'Thank you, your mail has been confirmed!',
-        'email' => $user['email']
-      ];
-      return redirect(route('login'))->with('success', $data);
+
+      if($host){
+        return redirect((isset($_SERVER['HTTPS']) ? "https://" : "http://") . $host.'/login');
+      }
+      return redirect(route('login'));
   }
 
 

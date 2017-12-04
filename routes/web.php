@@ -29,7 +29,7 @@ Route::get('/change_password', 'Auth\ChangePasswordController@change_password')-
 Route::get('/mycrypto', 'MycryptoController@mycrypto')->name('mycrypto');
 Route::get('/current_wallets', 'MycryptoController@current_wallets')->name('current_wallets');
 Route::get('/resend', 'Auth\RegisterController@resend')->name('resend');
-Route::get('/users/confirmation/{token}', 'Auth\RegisterController@confirmation')->name('confirmation');
+Route::get('/users/confirmation/{token}/{host}', 'Auth\RegisterController@confirmation')->name('confirmation');
 
 
 Route::post('/goToAgreement2', 'Auth\StepValidation\AgreementController@goToAgreement2')->name('goToAgreement2');

@@ -23,6 +23,7 @@ trait RegisterMailTrait
       'list_ids' => $user_lists,
       'fields[email]' => $user_email,
       'fields[code]' => $data['token'], // передать токен для регистрации
+      'fields[host]' => "$_SERVER[HTTP_HOST]", // передать host для редиректа
       'fields[code2]' => $data['ip_token'], // сгенерить код такой длины и записать в базу, просто так, на будущее (включить ИП юзера)
       'request_ip' => $user_ip,
       'tags' => $user_tag,
