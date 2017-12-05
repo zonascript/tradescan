@@ -173,7 +173,7 @@ class RegisterController extends Controller
       $user->save();
 
       if($host){
-        return redirect((isset($_SERVER['HTTPS']) ? "https://" : "http://") . $host.'/login?email='.$user['email'].'&title='.trans('auth.is_correct').'&message='.trans('auth.tnx_confirmed'));
+        return redirect((isset($_SERVER['HTTPS']) ? "https://" : "http://") . $host.'/login?email='.$user['email'].'&title='.trans('auth.tnx_confirmed_title').'&message='.trans('auth.is_correct_message'));
       }
       return redirect(route('login'));
   }
