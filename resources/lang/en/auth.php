@@ -22,6 +22,8 @@ return [
     'invalid_send_reset_mail' => 'Unfortunately, the mail server does not work temporarily. Try to recover your password in an hour.',
     'smth_went_wrong' => 'Something went wrong, please try again. Repeat process in an hour or try another Email address',
     'error_while_registration' => 'Something went wrong while registration, please try again. Repeat process in an hour or try another Email address',
+    'is_correct' => 'Email is correct. Just enter your password to login',
+    'tnx_confirmed' => 'Thank you, your account has been confirmed!',
 
 
 ];

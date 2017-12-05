@@ -3,19 +3,19 @@
 @section('content')
 
   <div class="content-body login-body">
-    @if ($success = Session::get('success') && isset($success['title']))
-      <h3 style="letter-spacing: 3px; text-transform: none;">{{ $success['title'] }}</h3>
+    @if (app('request')->input('title'))
+      <h3 style="letter-spacing: 3px; text-transform: none;">{{ app('request')->input('title') }}</h3>
       @else
       <h3>{{__('home/login.welcome') }}</h3>
     @endif
     <form id="loginForm" method="POST" action="{{ route('login') }}">
       {{ csrf_field() }}
       <label for="email" class="email-label">@lang('home/login.email_label')</label>
-      <input type="text" name="email" class="my-input email-input " placeholder="example@mail.com" value="{{ $success['email'] }}">
-        @if ($success = Session::get('success') && isset($success['message']))
+      <input type="text" name="email" class="my-input email-input " placeholder="example@mail.com" value="{{ app('request')->input('email') }}">
+        @if (app('request')->input('message'))
             <span class="success-sent help-block-success">
                <i class='fa fa-exclamation-circle fa-2x' aria-hidden='true'></i>
-                  <p>{{ $success['message'] }}</p>
+                  <p>{{ app('request')->input('message') }}</p>
              </span>
         @endif
         <div class="error-message error-message0 email">
