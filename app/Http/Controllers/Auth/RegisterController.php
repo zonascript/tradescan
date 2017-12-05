@@ -172,8 +172,12 @@ class RegisterController extends Controller
       $user->confirmed_at = Carbon::now();
       $user->save();
 
+      $userEmail = (strpos($user['email'], '+') !== false) ? str_replace('+', '%2B', $user['email'] ) : $user['email'];
       if($host){
-        return redirect((isset($_SERVER['HTTPS']) ? "https://" : "http://") . $host.'/login?email='.$user['email'].'&title='.trans('auth.tnx_confirmed_title').'&message='.trans('auth.is_correct_message'));
+        return redirect((isset($_SERVER['HTTPS']) ? "https://" : "http://") . $host.
+          '/login?email='.$userEmail.
+          '&title='.urlencode(trans('auth.tnx_confirmed_title')).
+          '&message='.urlencode(trans('auth.is_correct_message')));
       }
       return redirect(route('login'));
   }
