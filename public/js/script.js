@@ -100,7 +100,7 @@ $(document).ready(function () {
     });
 
     // Email validator
-    $('input[name^=email]').on('input', function (e) {
+    $('input[name^=email],input[name$=email]').on('input', function (e) {
         $(this).val($(this).val().toLowerCase().replace(/[^a-z0-9@.+\-_]/g, '').substr(0, 255));
     });
     // Password validator
@@ -135,6 +135,21 @@ $(document).ready(function () {
                 $(this).val(eth_parse($(this).val()));
         }
     });
+    // name, address validator
+    $('input#nameSurname, input#nationality, input#permanent_address, input#date_place_birth, input#source_of_funds').on('input', function (e) {
+        $(this).val($(this).val().replace(/[^a-zA-Z0-9а-яА-ЯёЁ\- ,.:;]/g,'').substr(0,511));
+    });
+
+    $('input#telegram').on('input', function (e) {
+        $(this).val(($(this).val().match(/(@[a-zA-Z0-9\-_]{0,32}){1}/g, '$0') || [""]).shift() || '@');
+    });
+
+    $('input#contact_number').on('input', function (e) {
+        $(this).val(VMasker.toPattern($(this).val(),'+9-999-999-99999999999'));
+    });
+
+
+
 
 });
 

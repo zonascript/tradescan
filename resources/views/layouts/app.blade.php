@@ -153,6 +153,7 @@
 <script src="{{ asset('js/mycrypto.js?v='.env('VERSION')) }}"></script>
 <script src="{{ asset('js/date_count_down.js?v='.env('VERSION')) }}"></script>
 <script src="{{ asset('js/widget.js?v='.env('VERSION')) }}"></script>
+<script src="{{ asset('js/vanilla-masker.js?v='.env('VERSION')) }}"></script>
 @include('_js.js_custom_validation')
 
 @yield('script')
