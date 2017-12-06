@@ -46,8 +46,7 @@
        <input type="hidden" name="BTC" id="BTC">
       </form>
     </div>
-  <br> <br> <br> <br> <br>
-  <br> <br> <br> <br> <br>
+
 @endsection
 
 @section('script')
