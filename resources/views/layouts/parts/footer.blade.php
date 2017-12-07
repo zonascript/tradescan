@@ -1,1 +1,3 @@
-    <span class="text-muted">Footer</span>
+<div class="text-wrapper">
+  @lang('footer.footer')
+</div>

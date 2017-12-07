@@ -1,0 +1,40 @@
+header{
+  background-color: #676161;
+  height:$header-height;
+
+  .wrapper{
+    height: inherit;
+
+    .header-logo{
+      width:148px;
+      height:55px;
+    }
+    .menu-box,ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+
+      ul {
+        width:90%;
+        max-width: 800px;
+        min-width: 725px;
+
+        justify-content: space-between;
+        li{
+          color: white;
+          font-size: 16px;
+          list-style: none;
+        }
+      }
+    }
+
+    .lang-switcher{
+      font-size: 18px;
+      color:gold;
+      text-decoration: none;
+    }
+
+  }
+
+}

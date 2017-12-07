@@ -1,0 +1,15 @@
+aside {
+  background: lightgreen;
+  max-width: $aside-max-width!important;
+  min-width: $aside-max-width!important;
+}
+
+main{
+  background: lightgrey;
+}
+
+.app, .content-holder{
+  min-height: calc(100vh - #{$footer-height} - #{$header-height});
+}
+
+

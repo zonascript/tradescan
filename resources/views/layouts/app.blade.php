@@ -14,30 +14,34 @@
     <!-- Styles -->
 </head>
 <body>
+<div class="app">
   <header class="container-fluid">
     @include('layouts.parts.header')
   </header>
-<div class="app">
-
   <div class="container-fluid wrapper">
-    <div class="row">
+    <div class="row content-holder">
+
       <aside class="col-2">
-        {{--@include('layouts.parts.aside')--}}
+        @include('layouts.parts.aside')
+
       </aside>
+
       <main class="col">
         @yield('content')
+        <button type="button" id="sidebarCollapse" class="sidebar-toggle btn">
+          <i class="btn-glyph glyphicon glyphicon-arrow-right"></i>
+        </button>
       </main>
     </div>
   </div>
 
-</div>
 
-  <footer class="footer">
+  <footer class="footer align-items-center justify-content-center">
     @include('layouts.parts.footer')
   </footer>
 
   @include('layouts.parts.scripts')
-
+</div>
 @stack('scripts')
 </body>
 </html>

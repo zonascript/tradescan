@@ -1,0 +1,23 @@
+footer {
+  display:flex!important;
+  width: 100%;
+  height: $footer-height;
+  line-height: calc( #{$footer-height} / 3);
+  background-color: #333333;
+  font-size: 12px;
+  text-align: center;
+
+  .text-wrapper{
+    width:100vw;
+    word-wrap: break-word;
+
+    .footer-company {
+      color:white;
+      text-decoration: underline;
+    }
+
+
+  }
+
+}
+

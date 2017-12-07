@@ -1,0 +1,32 @@
+@media (max-width: 768px) {
+  aside {
+    margin-left: -$aside-max-width;
+    transition: .2s ease-in-out;
+    z-index:5;
+    min-height: calc(100vh - #{$footer-height} - #{$header-height})!important;
+    position:fixed!important;
+    &.active{
+      margin-left: 0;
+    }
+  }
+  .sidebar-toggle{
+    display: block;
+    position:fixed!important;
+    margin-left:  -15px;
+    transition: .2s ease-in-out;
+    z-index:5;
+    outline: none!important;
+    border:none!important;
+    box-shadow: none!important;
+    border-radius: 0!important;
+    &.active{
+      margin-left: $aside-max-width - 15px;
+    }
+  }
+  main {
+    position:fixed!important;
+    z-index:4;
+    min-height: calc(100vh - #{$footer-height} - #{$header-height})!important;
+  }
+
+}

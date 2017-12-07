@@ -17,7 +17,7 @@
 <div id="app">
   @include('layouts.parts.header')
 
- sdfddddddddddddddddd
+  sdfddddddddddddddddd
 
   @include('layouts.parts.footer')
 </div>

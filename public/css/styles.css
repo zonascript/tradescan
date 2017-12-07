@@ -1,33 +1,4 @@
-aside {
-  background: lightgreen;
 
-}
-
-main{
-  background: lightgrey;
-}
-header{
-  background-color: lightblue;
-
-}
-.footer {
-  /*position: absolute;*/
-  /*bottom: 0;*/
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
-  background-color: lightblue;
-}
-.app{
-  min-height: calc(100vh - 144px);
-}
-.wrapper {
-  min-height: calc(100vh - 144px);
-}
-.row{
-  min-height: calc(100vh - 144px);
-}
 
 /*html, body {*/
   /*background-color: #303845;*/
@@ -180,43 +151,43 @@ header{
   /*color: #E6B771;*/
 /*}*/
 
-/*!*.zaber-logo-img {*!*/
+/*.zaber-logo-img {*/
 
-  /*!*width: 350px;*!*/
-/*!*}*!*/
-/*!*.logo-box{*!*/
-  /*!*margin-left:10px;*!*/
-/*!*}*!*/
+  /*width: 350px;*/
+/*}*/
+/*.logo-box{*/
+  /*margin-left:10px;*/
+/*}*/
 
-/*!*.mbri-save {*!*/
-  /*!*display: block;*!*/
-  /*!*float: left;*!*/
-  /*!*margin-right: 10px;*!*/
+/*.mbri-save {*/
+  /*display: block;*/
+  /*float: left;*/
+  /*margin-right: 10px;*/
 
-/*!*}*!*/
+/*}*/
 
-/*!*.cabinet{*!*/
-  /*!*transition: 0.3s;*!*/
-  /*!*border-radius:25px;*!*/
-  /*!*background-color: #a07d5c;*!*/
-  /*!*border-color: #a07d5c;*!*/
-  /*!*letter-spacing: 1px;*!*/
-  /*!*padding:11px 30px!important;*!*/
-  /*!*color:#ffffff;*!*/
-  /*!*font-size: 18px !important;*!*/
-  /*!*align-items: center;*!*/
-  /*!*text-transform: capitalize;*!*/
-  /*!*display: inline-flex;*!*/
-  /*!*line-height: 27.5px !important;*!*/
-  /*!*margin-right: 85px;*!*/
-/*!*}*!*/
+/*.cabinet{*/
+  /*transition: 0.3s;*/
+  /*border-radius:25px;*/
+  /*background-color: #a07d5c;*/
+  /*border-color: #a07d5c;*/
+  /*letter-spacing: 1px;*/
+  /*padding:11px 30px!important;*/
+  /*color:#ffffff;*/
+  /*font-size: 18px !important;*/
+  /*align-items: center;*/
+  /*text-transform: capitalize;*/
+  /*display: inline-flex;*/
+  /*line-height: 27.5px !important;*/
+  /*margin-right: 85px;*/
+/*}*/
 
-/*!*.cabinet:hover{*!*/
-  /*!*text-decoration: none!important;*!*/
-  /*!*color:white;*!*/
-  /*!*background-color: #a07d5c!important;*!*/
-  /*!*box-shadow: 150px 150px 150px 150px rgba(0, 0, 0, 0.3)inset;*!*/
-/*!*}*!*/
+/*.cabinet:hover{*/
+  /*text-decoration: none!important;*/
+  /*color:white;*/
+  /*background-color: #a07d5c!important;*/
+  /*box-shadow: 150px 150px 150px 150px rgba(0, 0, 0, 0.3)inset;*/
+/*}*/
 
 /*!*!*home*!*!*/
 
