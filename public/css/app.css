@@ -8401,13 +8401,22 @@ header .wrapper ul ul {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0;
 }
 
 header .wrapper .menu-box ul li,
 header .wrapper ul ul li {
-  color: white;
   font-size: 16px;
   list-style: none;
+}
+
+header .wrapper .menu-box ul li a,
+header .wrapper ul ul li a {
+  color: white;
+  text-decoration: none;
 }
 
 header .wrapper .lang-switcher {
@@ -8416,10 +8425,100 @@ header .wrapper .lang-switcher {
   text-decoration: none;
 }
 
+header .wrapper .burger-box {
+  display: none;
+  text-align: right;
+}
+
+header .mob-menu {
+  display: none;
+}
+
 @media (max-width: 1023px) {
+  header .wrapper {
+    position: fixed !important;
+    z-index: 7;
+    width: 100vw;
+  }
+
   header .wrapper .menu-box,
   header .wrapper .lang-box {
     display: none;
+  }
+
+  header .wrapper .burger-box {
+    display: block;
+    text-align: right;
+  }
+
+  header .wrapper .burger-box a {
+    border: 1px solid white;
+    border-radius: 1px;
+    -webkit-transition: .1s ease-in-out;
+    transition: .1s ease-in-out;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    color: white;
+    text-decoration: none;
+  }
+
+  header .wrapper .burger-box a:active {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+
+  header .wrapper .burger-box a span {
+    color: white;
+  }
+
+  header .mob-menu {
+    display: block;
+    position: fixed !important;
+    z-index: 6;
+    background-color: #676161;
+    color: white;
+    width: 100vw;
+    margin-left: -15px;
+    margin-top: -236px;
+    -webkit-transition: .4s ease-in-out;
+    transition: .4s ease-in-out;
+  }
+
+  header .mob-menu.active {
+    margin-top: 60px;
+  }
+
+  header .mob-menu .mob-menu-list {
+    text-align: center;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  header .mob-menu .mob-menu-list li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  header .mob-menu .mob-menu-list .mob-lang {
+    -webkit-transition: .1s ease-in-out;
+    transition: .1s ease-in-out;
+  }
+
+  header .mob-menu .mob-menu-list .mob-lang:active {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+
+  header .mob-menu .mob-menu-list .mob-lang a {
+    color: goldenrod;
+    padding: 5px 12px;
+    border: 1px solid white;
+    border-radius: 15px;
+    text-decoration: none;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
   }
 }
 

@@ -1,5 +1,5 @@
 header{
-  background-color: #676161;
+  background-color: $header-bg;
   height:$header-height;
 
   .wrapper{
@@ -19,12 +19,18 @@ header{
         width:90%;
         max-width: 800px;
         min-width: 725px;
-
         justify-content: space-between;
+        align-items: center;
+        margin: 0;
+
         li{
-          color: white;
           font-size: 16px;
           list-style: none;
+
+          a{
+            color: white;
+            text-decoration: none;
+          }
         }
       }
     }
@@ -34,7 +40,15 @@ header{
       color:gold;
       text-decoration: none;
     }
+    .burger-box {
+      display:none;
+      text-align: right;
+    }
 
+  }
+
+  .mob-menu{
+    display: none;
   }
 
 }
