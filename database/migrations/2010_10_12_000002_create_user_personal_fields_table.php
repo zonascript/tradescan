@@ -39,6 +39,6 @@ class CreateUserPersonalFieldsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_personal_fields');
     }
 }

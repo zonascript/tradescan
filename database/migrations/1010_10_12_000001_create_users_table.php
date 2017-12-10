@@ -22,11 +22,9 @@ class CreateUsersTable extends Migration
           $table->string('token')->nullable();
           $table->string('ip_token')->nullable();
           $table->integer('confirmed')->default(0);
+          $table->timestamp('confirmed_at')->nullable();
           $table->integer('reg_attempts')->default(0);
           $table->integer('reset_attempts')->default(0);
-          $table->timestamp('confirmed_at')->nullable();
-          $table->string('referred_by')->nullable();
-          $table->string('affiliate_id')->unique();
           $table->rememberToken();
           $table->timestamps();
         });

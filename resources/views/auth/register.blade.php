@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.app')
 
 @section('content')
     <div class="content-body register-body">
@@ -9,7 +9,7 @@
             <input type="text" name="email" class="my-input email-input">
             @if ($success = Session::get('success'))
                 <span class="success-sent help-block-success">
-               <i class='fa fa-exclamation-circle fa-2x' aria-hidden='true'></i>
+               <i class='fa fa-exclamation-circle fa-2x' asria-hidden='true'></i>
                   <p>{{ $success }}</p>
              </span>
             @endif

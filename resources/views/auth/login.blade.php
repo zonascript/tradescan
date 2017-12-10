@@ -11,7 +11,7 @@
     <form id="loginForm" method="POST" action="{{ route('login') }}">
       {{ csrf_field() }}
       <label for="email" class="email-label">@lang('home/login.email_label')</label>
-      <input type="text" name="email" class="my-input email-input " placeholder="example@mail.com" value="{{ app('request')->input('email') }}">
+      <input type="text" name="email" class="my-input email-input " placeholder="example@mail.com" value="{{ $email }}">
         @if (app('request')->input('message'))
             <span class="success-sent help-block-success">
                <i class='fa fa-exclamation-circle fa-2x' aria-hidden='true'></i>

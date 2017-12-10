@@ -4,6 +4,7 @@ namespace App\Traits\Auth;
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Traits\RegisterMailTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Support\Facades\Input;
 
 
 trait AuthenticatesUsers
@@ -28,7 +30,20 @@ trait AuthenticatesUsers
      */
     public function showLoginForm()
     {
+      $token = Input::get('token');
+
+      if(!$token){
         return view('auth.login');
+      }
+
+      $user = User::where('token', $token)->first();
+      $user->confirmed = 1;
+      $user->confirmed_at = Carbon::now();
+      $user->save();
+
+      $email = (strpos($user['email'], '+') !== false) ? str_replace('+', '%2B', $user['email'] ) : $user['email'];
+      Log::info($email);
+      return view('auth.login')->with('email', $email);
     }
 
     /**

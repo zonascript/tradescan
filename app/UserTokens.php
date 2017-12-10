@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserWalletFields extends Authenticatable
+class UserTokens extends Authenticatable
 {
     use Notifiable;
 
@@ -15,7 +15,7 @@ class UserWalletFields extends Authenticatable
      * @var array
      */
     protected $fillable = [
-      'user_id','wallet_invest_from','wallet_get_tokens','name_of_wallet_invest_from','ETH','BTC','DASH','XMR','LTC','XRP','Fiat'
+      'user_id','token_name','smart_contract'
     ];
 
     /**

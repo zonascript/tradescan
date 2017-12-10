@@ -10,6 +10,7 @@ use App\UserHistoryFields;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -54,6 +55,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+      $token = Input::get('code');
       $this->middleware('guest');
 
     }
@@ -162,24 +164,11 @@ class RegisterController extends Controller
     }
 
     public function confirmation($token, $host){
-      $user = User::where('token', $token)->first();
-      Log::info($host);
-      if (is_null($user)) {
-        return redirect(route('login'))->with('success', 'No such user');
-      }
 
-      $user->confirmed = 1;
-      $user->confirmed_at = Carbon::now();
-      $user->save();
-
-      $userEmail = (strpos($user['email'], '+') !== false) ? str_replace('+', '%2B', $user['email'] ) : $user['email'];
-      if($host){
-        return redirect((isset($_SERVER['HTTPS']) ? "https://" : "http://") . $host.
-          '/login?email='.$userEmail.
-          '&title='.urlencode(trans('auth.tnx_confirmed_title')).
-          '&message='.urlencode(trans('auth.is_correct_message')));
-      }
-      return redirect(route('login'));
+      return redirect((isset($_SERVER['HTTPS']) ? "https://" : "http://") . $host .
+        '/login?token='.$token.
+        '&title='.urlencode(trans('auth.tnx_confirmed_title')).
+        '&message='.urlencode(trans('auth.is_correct_message')));
   }
 
 
